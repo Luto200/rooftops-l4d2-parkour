@@ -1,0 +1,56 @@
+[
+  {
+    "system_id": "sys_companion",
+    "name": "Companion Game Verifier & Pak Metadata Reader",
+    "host_role": "primary:left-4-dead-2",
+    "companion_role": "companion:custom-rooftops-and-alleys-the-parkour-game",
+    "config_source": "{game}/left4dead2/cfg/melty_rooftops.cfg",
+    "log_output": "{game}/left4dead2/melty.log",
+    "verified": true
+  },
+  {
+    "system_id": "sys_zombiefree",
+    "name": "AI Director & Infected Purger",
+    "host_role": "primary:left-4-dead-2",
+    "companion_role": "companion:custom-rooftops-and-alleys-the-parkour-game",
+    "config_source": "ConVars:director_no_mobs,director_no_specials,director_no_bosses,z_common_limit",
+    "log_output": "{game}/left4dead2/melty.log",
+    "verified": true
+  },
+  {
+    "system_id": "sys_parkour",
+    "name": "Momentum, Vault, Wallrun & Roll Physics",
+    "host_role": "primary:left-4-dead-2",
+    "companion_role": "companion:custom-rooftops-and-alleys-the-parkour-game",
+    "config_source": "sheets/tricks.json",
+    "log_output": "{game}/left4dead2/melty.log",
+    "verified": true
+  },
+  {
+    "system_id": "sys_flips",
+    "name": "Mid-Air Flip Rotation & Bail Detector",
+    "host_role": "primary:left-4-dead-2",
+    "companion_role": "companion:custom-rooftops-and-alleys-the-parkour-game",
+    "config_source": "sheets/tricks.json",
+    "log_output": "{game}/left4dead2/melty.log",
+    "verified": true
+  },
+  {
+    "system_id": "sys_session",
+    "name": "Session Marker Teleport & Pigeon Scout Mode",
+    "host_role": "primary:left-4-dead-2",
+    "companion_role": "companion:custom-rooftops-and-alleys-the-parkour-game",
+    "config_source": "Commands:sm_setmarker,sm_marker,sm_pigeon",
+    "log_output": "{game}/left4dead2/melty.log",
+    "verified": true
+  },
+  {
+    "system_id": "sys_trickbattle",
+    "name": "4-Player Co-op Freeroam & Trick Battle Scoreboard",
+    "host_role": "primary:left-4-dead-2",
+    "companion_role": "companion:custom-rooftops-and-alleys-the-parkour-game",
+    "config_source": "{game}/left4dead2/melty.properties",
+    "log_output": "{game}/left4dead2/melty.log",
+    "verified": true
+  }
+]
