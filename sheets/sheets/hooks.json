@@ -1,0 +1,44 @@
+[
+  {
+    "hook_id": "hook_plugin_start",
+    "sourcemod_callback": "OnPluginStart",
+    "system_id": "sys_companion",
+    "reads_tricks": false,
+    "purpose": "Registers commands, hooks events, verifies companion install path, runs Melty self-test"
+  },
+  {
+    "hook_id": "hook_map_start",
+    "sourcemod_callback": "OnMapStart",
+    "system_id": "sys_zombiefree",
+    "reads_tricks": false,
+    "purpose": "Locks AI Director off, purges infected/witches/tanks, writes Melty join/host log"
+  },
+  {
+    "hook_id": "hook_run_cmd",
+    "sourcemod_callback": "OnPlayerRunCmd",
+    "system_id": "sys_parkour",
+    "reads_tricks": true,
+    "purpose": "Processes momentum sprint, wallrun raycasts, waist-height vaults, and mid-air flip states"
+  },
+  {
+    "hook_id": "hook_flip_tick",
+    "sourcemod_callback": "OnPlayerRunCmd",
+    "system_id": "sys_flips",
+    "reads_tricks": true,
+    "purpose": "Advances flip rotation timer, applies camera roll/pitch punch, banks combo or triggers bail on landing"
+  },
+  {
+    "hook_id": "hook_fall_damage",
+    "sourcemod_callback": "Event_PlayerFallDamage",
+    "system_id": "sys_parkour",
+    "reads_tricks": true,
+    "purpose": "Negates fall damage on Safety Roll or active parkour landing; penalizes unfinished mid-air flip bail"
+  },
+  {
+    "hook_id": "hook_trick_battle_timer",
+    "sourcemod_callback": "Timer_TrickBattleTick",
+    "system_id": "sys_trickbattle",
+    "reads_tricks": true,
+    "purpose": "Broadcasts live combo multipliers and 90-second 4-player Trick Battle leaderboard via HUD hint text"
+  }
+]
