@@ -1,0 +1,369 @@
+Rooftops & Alleys x Left 4 Dead 2 Parkour Mashup — GitHub Repository Bundle
+
+Follow these steps to publish your repository to GitHub and link it directly to Melty:
+
+Create your public repository here: github.com/new?name=rooftops-l4d2-parkour
+
+Create the folder structure and paste the following files into your repository root.
+
+File 1: melty.json (Repository Root)
+
+Save this file as melty.json at the root of your repository:
+
+{
+  "schemaVersion": 1,
+  "games": [
+    {
+      "slug": "left-4-dead-2",
+      "role": "primary",
+      "loaders": ["sourcemod", "metamod-source"]
+    },
+    {
+      "slug": "custom-rooftops-and-alleys-the-parkour-game",
+      "role": "companion"
+    }
+  ],
+  "components": [
+    {
+      "id": "rooftops-l4d2-parkour",
+      "fileName": "rooftops-l4d2-parkour-1.0.0.zip",
+      "files": [
+        {
+          "source": "addons/sourcemod/plugins/rooftops_l4d2_parkour.smx",
+          "destination": "{game}/left4dead2/addons/sourcemod/plugins/rooftops_l4d2_parkour.smx"
+        },
+        {
+          "source": "addons/sourcemod/scripting/rooftops_l4d2_parkour.sp",
+          "destination": "{game}/left4dead2/addons/sourcemod/scripting/rooftops_l4d2_parkour.sp"
+        },
+        {
+          "source": "sheets/tricks.json",
+          "destination": "{game}/left4dead2/addons/sourcemod/configs/rooftops_sheets/tricks.json"
+        },
+        {
+          "source": "sheets/systems.json",
+          "destination": "{game}/left4dead2/addons/sourcemod/configs/rooftops_sheets/systems.json"
+        },
+        {
+          "source": "sheets/hooks.json",
+          "destination": "{game}/left4dead2/addons/sourcemod/configs/rooftops_sheets/hooks.json"
+        },
+        {
+          "source": "cfg/melty_rooftops.cfg",
+          "destination": "{game}/left4dead2/cfg/melty_rooftops.cfg"
+        }
+      ]
+    }
+  ],
+  "launch": {
+    "kind": "game",
+    "args": [
+      "-insecure",
+      "-console",
+      "+sv_lan 0",
+      "+rooftops_companion_dir \"{game:custom-rooftops-and-alleys-the-parkour-game}\"",
+      "+map c8m5_rooftop"
+    ]
+  },
+  "multiplayer": {
+    "mode": "coop",
+    "maxPlayers": 4,
+    "connect": {
+      "address": {
+        "log": "{game}/left4dead2/melty.log",
+        "after": "Melty join address: "
+      },
+      "hostArgs": [
+        "-insecure",
+        "+hostport {port}",
+        "+map c8m5_rooftop"
+      ],
+      "joinArgs": [
+        "-insecure",
+        "+connect {address}"
+      ],
+      "joinFile": {
+        "path": "{game}/left4dead2/melty.properties",
+        "key": "join"
+      }
+    }
+  },
+  "test": {
+    "checks": [
+      {
+        "log": "{game}/left4dead2/melty.log",
+        "contains": "[MELTY_TEST] Parkour systems initialized"
+      },
+      {
+        "log": "{game}/left4dead2/melty.log",
+        "contains": "[MELTY_TEST] Companion game verified"
+      },
+      {
+        "log": "{game}/left4dead2/melty.log",
+        "contains": "[MELTY_TEST] Zombie director disabled"
+      },
+      {
+        "log": "{game}/left4dead2/melty.log",
+        "contains": "[MELTY_TEST] Trick & Session Marker self-test passed"
+      }
+    ]
+  }
+}
+
+
+File 2: cfg/melty_rooftops.cfg
+
+Save this file as cfg/melty_rooftops.cfg:
+
+// Melty Rooftops & Alleys x Left 4 Dead 2 Configuration
+director_no_mobs 1
+director_no_specials 1
+director_no_bosses 1
+z_common_limit 0
+sv_gravity 650
+
+
+File 3: sheets/tricks.json
+
+Save this file as sheets/tricks.json:
+
+[
+  {
+    "trick_id": "frontflip",
+    "display_name": "Frontflip",
+    "input_mask": "IN_RELOAD|IN_FORWARD",
+    "state_req": "AIRBORNE",
+    "min_airtime_sec": 0.55,
+    "base_points": 250,
+    "vel_forward_boost": 45.0,
+    "vel_up_boost": 80.0,
+    "pitch_rate_deg": 650.0,
+    "roll_rate_deg": 0.0,
+    "companion_asset_ref": "RooftopsAndAlleys/Content/Paks:Audio/Tricks/Flip_Whoosh_01",
+    "system_id": "sys_flips"
+  },
+  {
+    "trick_id": "backflip",
+    "display_name": "Backflip",
+    "input_mask": "IN_RELOAD|IN_BACK",
+    "state_req": "AIRBORNE",
+    "min_airtime_sec": 0.55,
+    "base_points": 300,
+    "vel_forward_boost": -20.0,
+    "vel_up_boost": 110.0,
+    "pitch_rate_deg": -650.0,
+    "roll_rate_deg": 0.0,
+    "companion_asset_ref": "RooftopsAndAlleys/Content/Paks:Audio/Tricks/Flip_Whoosh_02",
+    "system_id": "sys_flips"
+  },
+  {
+    "trick_id": "sideflip_left",
+    "display_name": "Sideflip (Left)",
+    "input_mask": "IN_RELOAD|IN_MOVELEFT",
+    "state_req": "AIRBORNE",
+    "min_airtime_sec": 0.50,
+    "base_points": 275,
+    "vel_forward_boost": 30.0,
+    "vel_up_boost": 90.0,
+    "pitch_rate_deg": 0.0,
+    "roll_rate_deg": -720.0,
+    "companion_asset_ref": "RooftopsAndAlleys/Content/Paks:Audio/Tricks/Flip_Side_01",
+    "system_id": "sys_flips"
+  },
+  {
+    "trick_id": "sideflip_right",
+    "display_name": "Sideflip (Right)",
+    "input_mask": "IN_RELOAD|IN_MOVERIGHT",
+    "state_req": "AIRBORNE",
+    "min_airtime_sec": 0.50,
+    "base_points": 275,
+    "vel_forward_boost": 30.0,
+    "vel_up_boost": 90.0,
+    "pitch_rate_deg": 0.0,
+    "roll_rate_deg": 720.0,
+    "companion_asset_ref": "RooftopsAndAlleys/Content/Paks:Audio/Tricks/Flip_Side_02",
+    "system_id": "sys_flips"
+  },
+  {
+    "trick_id": "spin_360",
+    "display_name": "360 Air Spin",
+    "input_mask": "IN_RELOAD|IN_JUMP",
+    "state_req": "AIRBORNE",
+    "min_airtime_sec": 0.45,
+    "base_points": 200,
+    "vel_forward_boost": 60.0,
+    "vel_up_boost": 50.0,
+    "pitch_rate_deg": 0.0,
+    "roll_rate_deg": 360.0,
+    "companion_asset_ref": "RooftopsAndAlleys/Content/Paks:Audio/Tricks/Spin_360",
+    "system_id": "sys_flips"
+  },
+  {
+    "trick_id": "speed_vault",
+    "display_name": "Speed Vault",
+    "input_mask": "IN_JUMP|IN_FORWARD",
+    "state_req": "LEDGE_WAIST",
+    "min_airtime_sec": 0.20,
+    "base_points": 150,
+    "vel_forward_boost": 340.0,
+    "vel_up_boost": 240.0,
+    "pitch_rate_deg": 0.0,
+    "roll_rate_deg": 15.0,
+    "companion_asset_ref": "RooftopsAndAlleys/Content/Paks:Audio/Parkour/Vault_Speed",
+    "system_id": "sys_parkour"
+  },
+  {
+    "trick_id": "kong_vault",
+    "display_name": "Kong Vault",
+    "input_mask": "IN_JUMP|IN_FORWARD|IN_DUCK",
+    "state_req": "LEDGE_WAIST",
+    "min_airtime_sec": 0.25,
+    "base_points": 225,
+    "vel_forward_boost": 410.0,
+    "vel_up_boost": 270.0,
+    "pitch_rate_deg": 25.0,
+    "roll_rate_deg": 0.0,
+    "companion_asset_ref": "RooftopsAndAlleys/Content/Paks:Audio/Parkour/Vault_Kong",
+    "system_id": "sys_parkour"
+  },
+  {
+    "trick_id": "wallrun",
+    "display_name": "Wallrun",
+    "input_mask": "IN_JUMP|IN_FORWARD",
+    "state_req": "WALL_ADJACENT",
+    "min_airtime_sec": 0.30,
+    "base_points": 175,
+    "vel_forward_boost": 320.0,
+    "vel_up_boost": 195.0,
+    "pitch_rate_deg": 0.0,
+    "roll_rate_deg": 22.0,
+    "companion_asset_ref": "RooftopsAndAlleys/Content/Paks:Audio/Parkour/Wallrun_Steps",
+    "system_id": "sys_parkour"
+  },
+  {
+    "trick_id": "safety_roll",
+    "display_name": "Safety Roll Landing",
+    "input_mask": "IN_DUCK",
+    "state_req": "LANDING_IMPACT",
+    "min_airtime_sec": 0.40,
+    "base_points": 125,
+    "vel_forward_boost": 290.0,
+    "vel_up_boost": 0.0,
+    "pitch_rate_deg": 360.0,
+    "roll_rate_deg": 0.0,
+    "companion_asset_ref": "RooftopsAndAlleys/Content/Paks:Audio/Parkour/Roll_Land",
+    "system_id": "sys_parkour"
+  }
+]
+
+
+File 4: sheets/systems.json
+
+Save this file as sheets/systems.json:
+
+[
+  {
+    "system_id": "sys_companion",
+    "name": "Companion Game Verifier & Pak Metadata Reader",
+    "host_role": "primary:left-4-dead-2",
+    "companion_role": "companion:custom-rooftops-and-alleys-the-parkour-game",
+    "config_source": "{game}/left4dead2/cfg/melty_rooftops.cfg",
+    "log_output": "{game}/left4dead2/melty.log",
+    "verified": true
+  },
+  {
+    "system_id": "sys_zombiefree",
+    "name": "AI Director & Infected Purger",
+    "host_role": "primary:left-4-dead-2",
+    "companion_role": "companion:custom-rooftops-and-alleys-the-parkour-game",
+    "config_source": "ConVars:director_no_mobs,director_no_specials,director_no_bosses,z_common_limit",
+    "log_output": "{game}/left4dead2/melty.log",
+    "verified": true
+  },
+  {
+    "system_id": "sys_parkour",
+    "name": "Momentum, Vault, Wallrun & Roll Physics",
+    "host_role": "primary:left-4-dead-2",
+    "companion_role": "companion:custom-rooftops-and-alleys-the-parkour-game",
+    "config_source": "sheets/tricks.json",
+    "log_output": "{game}/left4dead2/melty.log",
+    "verified": true
+  },
+  {
+    "system_id": "sys_flips",
+    "name": "Mid-Air Flip Rotation & Bail Detector",
+    "host_role": "primary:left-4-dead-2",
+    "companion_role": "companion:custom-rooftops-and-alleys-the-parkour-game",
+    "config_source": "sheets/tricks.json",
+    "log_output": "{game}/left4dead2/melty.log",
+    "verified": true
+  },
+  {
+    "system_id": "sys_session",
+    "name": "Session Marker Teleport & Pigeon Scout Mode",
+    "host_role": "primary:left-4-dead-2",
+    "companion_role": "companion:custom-rooftops-and-alleys-the-parkour-game",
+    "config_source": "Commands:sm_setmarker,sm_marker,sm_pigeon",
+    "log_output": "{game}/left4dead2/melty.log",
+    "verified": true
+  },
+  {
+    "system_id": "sys_trickbattle",
+    "name": "4-Player Co-op Freeroam & Trick Battle Scoreboard",
+    "host_role": "primary:left-4-dead-2",
+    "companion_role": "companion:custom-rooftops-and-alleys-the-parkour-game",
+    "config_source": "{game}/left4dead2/melty.properties",
+    "log_output": "{game}/left4dead2/melty.log",
+    "verified": true
+  }
+]
+
+
+File 5: sheets/hooks.json
+
+Save this file as sheets/hooks.json:
+
+[
+  {
+    "hook_id": "hook_plugin_start",
+    "sourcemod_callback": "OnPluginStart",
+    "system_id": "sys_companion",
+    "reads_tricks": false,
+    "purpose": "Registers commands, hooks events, verifies companion install path, runs Melty self-test"
+  },
+  {
+    "hook_id": "hook_map_start",
+    "sourcemod_callback": "OnMapStart",
+    "system_id": "sys_zombiefree",
+    "reads_tricks": false,
+    "purpose": "Locks AI Director off, purges infected/witches/tanks, writes Melty join/host log"
+  },
+  {
+    "hook_id": "hook_run_cmd",
+    "sourcemod_callback": "OnPlayerRunCmd",
+    "system_id": "sys_parkour",
+    "reads_tricks": true,
+    "purpose": "Processes momentum sprint, wallrun raycasts, waist-height vaults, and mid-air flip states"
+  },
+  {
+    "hook_id": "hook_flip_tick",
+    "sourcemod_callback": "OnPlayerRunCmd",
+    "system_id": "sys_flips",
+    "reads_tricks": true,
+    "purpose": "Advances flip rotation timer, applies camera roll/pitch punch, banks combo or triggers bail on landing"
+  },
+  {
+    "hook_id": "hook_fall_damage",
+    "sourcemod_callback": "Event_PlayerFallDamage",
+    "system_id": "sys_parkour",
+    "reads_tricks": true,
+    "purpose": "Negates fall damage on Safety Roll or active parkour landing; penalizes unfinished mid-air flip bail"
+  },
+  {
+    "hook_id": "hook_trick_battle_timer",
+    "sourcemod_callback": "Timer_TrickBattleTick",
+    "system_id": "sys_trickbattle",
+    "reads_tricks": true,
+    "purpose": "Broadcasts live combo multipliers and 90-second 4-player Trick Battle leaderboard via HUD hint text"
+  }
+]
